@@ -1,5 +1,6 @@
 package service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import dto.OpportunityDTO;
@@ -15,5 +16,7 @@ public interface OpportunityService {
   void saveQuotation(QuotationDto quotationDto);
 
   List<OpportunityDTO> generateOpportunityData();
+
+  ByteArrayInputStream genereteCSVOpportunityResport();
 
 }

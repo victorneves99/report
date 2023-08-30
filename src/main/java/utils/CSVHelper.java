@@ -37,7 +37,7 @@ public class CSVHelper {
       }
 
       csvPrinter.flush();
-      csvPrinter.close();
+      // csvPrinter.close();
 
       return new ByteArrayInputStream(out.toByteArray());
 
