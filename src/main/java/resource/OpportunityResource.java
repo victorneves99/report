@@ -1,7 +1,13 @@
 package resource;
 
 import java.util.Date;
+import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
+import dto.OpportunityDTO;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -13,6 +19,7 @@ import jakarta.ws.rs.core.Response;
 import service.OpportunityService;
 
 @Path("/api/opportunity")
+@Authenticated
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class OpportunityResource {
@@ -20,21 +27,15 @@ public class OpportunityResource {
   @Inject
   OpportunityService opportunityService;
 
+  @Inject
+  JsonWebToken jsonWebToken;
+
   @GET
   @Path("/report")
-  @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public Response generateReport() {
+  @RolesAllowed({ "user", "manager" })
+  public List<OpportunityDTO> generateReport() {
 
-    try {
-
-      return Response.ok(opportunityService.generateOpportunityData(), MediaType.APPLICATION_OCTET_STREAM)
-          .header("content-disposition", "attachment; filename = " + new Date() + "--opportunity-venda.csv").build();
-
-    } catch (ServerErrorException e) {
-
-      return Response.serverError().build();
-
-    }
+    return opportunityService.generateOpportunityData();
 
   }
 

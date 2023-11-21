@@ -30,6 +30,16 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+
+    <!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-oidc -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-oidc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-oidc-token-propagation-reactive</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

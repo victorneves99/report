@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 import respository.OpportunityRespository;
 import respository.QuotationRespository;
 import service.OpportunityService;
-import utils.CSVHelper;
 
 @ApplicationScoped
 
@@ -61,24 +60,20 @@ public class OpportunityServiceImpl implements OpportunityService {
   @Override
   public List<OpportunityDTO> generateOpportunityData() {
 
-    return null;
+    List<OpportunityDTO> opportunities = new ArrayList<>();
 
-  }
+    opportunityRespository.findAll().stream().forEach(item -> {
 
-  @Override
-  public ByteArrayInputStream genereteCSVOpportunityResport() {
-
-    List<OpportunityDTO> opportunityList = new ArrayList<>();
-
-    opportunityRespository.findAll().list().forEach(item -> {
-
-      opportunityList.add(OpportunityDTO.builder().proposalId(item.getProposalId()).priceTonne(item.getPriceTonne())
+      opportunities.add(OpportunityDTO.builder()
+          .proposalId(item.getProposalId())
           .customer(item.getCustomer())
-          .lastDollarQuotation(item.getLastDollarQuotation()).build());
+          .priceTonne(item.getPriceTonne())
+          .lastDollarQuotation(item.getLastDollarQuotation())
+          .build());
 
     });
 
-    return CSVHelper.opportunittiesToCSV(opportunityList);
+    return opportunities;
 
   }
 
